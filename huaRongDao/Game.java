@@ -7,23 +7,25 @@ public class Game {
 	public static void main(String[] args) {
 		
 		long startTime = System.nanoTime();
-		GameSolver gameSolver = new DijkstraGameSolver();
+		GameSolver gameSolver = new GameSolver();
 		Game game = initGame横刀立马();
 		//Game game = initGame四将连关();
-		//PrintUtility.printID(game.initialBoard.image);
+		//PrintUtility.printID(game.initialBoard.bitImage);
 		gameSolver.solve(game);
 		long endTime = System.nanoTime();
 		long duration = endTime - startTime;
 
-		System.out.println("<html><body><font face=Courier>");
+		System.out.println("<html>");
+		System.out.println("<header><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />");
+		System.out.println("</header><body><font face=Courier>");
 		PrintUtility.printBestSolution(game, gameSolver);
 		System.out.println("Run time " + ((float)duration)/1000000000.0 +" seconds <br></font></body></html>");
 		
-/*		for (long i = 0; i < 10000000000L; i ++) {
+		/*for (long i = 0; i < 10000000000L; i ++) {
 			int x = 0;
 			x = x + 1;
-		}
-*/		
+		}*/
+		
 
 	}
 	

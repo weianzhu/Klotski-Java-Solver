@@ -4,13 +4,12 @@ import java.math.BigInteger;
 
 
 /**
- * Initially I used a number longer that 64-bits to store the image of the Board.  java.math.BigInteger is immutable.
+ * Initially I used more that 64-bits to store the image of the Board.  java.math.BigInteger is immutable.
  * It allocates a new object for every operation.  That is a little inefficient for repeated operations.  
  * So I wrote this MutableBigInteger.  I later realized 63 bits are enough for the image and this class becomes 
  * deprecated.  But it could be useful if we need to expand the puzzle size.  
  * I should use long instead of int in this class. 
  * 
- * @author weian.zhu
  *
  */
 @Deprecated

@@ -41,7 +41,7 @@ public class Move {
 			this.moveType = MoveType.RIGHT2;
 		}
 		else if (deltaXPos == -1 && deltaYPos == -1) {
-			if ((oldBoard.getValidMovesMask(MoveType.LEFTUP) & oldBlock.image) == oldBlock.image) {
+			if ((oldBoard.getValidMovesMask(MoveType.LEFTUP) & oldBlock.bitImage) == oldBlock.bitImage) {
 					this.moveType = MoveType.LEFTUP;
 			}
 			else {
@@ -49,7 +49,7 @@ public class Move {
 			}
 		}
 		else if (deltaXPos == 1 && deltaYPos == -1) {
-			if ((oldBoard.getValidMovesMask(MoveType.RIGHTUP) & oldBlock.image) == oldBlock.image) {
+			if ((oldBoard.getValidMovesMask(MoveType.RIGHTUP) & oldBlock.bitImage) == oldBlock.bitImage) {
 				this.moveType = MoveType.RIGHTUP;
 			}
 			else {
@@ -58,7 +58,7 @@ public class Move {
 			
 		}
 		else if (deltaXPos == -1 && deltaYPos == 1) {
-			if ((oldBoard.getValidMovesMask(MoveType.LEFTDOWN) & oldBlock.image) == oldBlock.image) {
+			if ((oldBoard.getValidMovesMask(MoveType.LEFTDOWN) & oldBlock.bitImage) == oldBlock.bitImage) {
 				this.moveType = MoveType.LEFTDOWN;
 			}
 			else {
@@ -66,7 +66,7 @@ public class Move {
 			}
 		}
 		else if (deltaXPos == 1 && deltaYPos == 1) {
-			if ((oldBoard.getValidMovesMask(MoveType.LEFTDOWN) & oldBlock.image) == oldBlock.image) {
+			if ((oldBoard.getValidMovesMask(MoveType.LEFTDOWN) & oldBlock.bitImage) == oldBlock.bitImage) {
 				this.moveType = MoveType.RIGHTDOWN;
 			}
 			else {
