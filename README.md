@@ -4,11 +4,11 @@
 
 # Implementation Notes
 
-   The program counts moving one block two steps consecutively as one move.  It takes some extra work for the program than just countiing the single-step moves.  
+The program counts moving one block two steps consecutively as one move.  It takes some extra work for the program than just countiing the single-step moves.  
 
-   The program utilizes a 64-bit long data type to represent the image of the board.  This allows filtering out invalid moves efficiently by using bit operations.  For the classic layout 横刀立马, it takes < 0.1 second on a PC with Intel i7-6500U 2.5GHz CPU to solve the puzzle.  An ealier version of the program using a more conventional object model took about 0.4 seconds.
+The program utilizes a 64-bit long data type to represent the image of the board.  This allows filtering out invalid moves efficiently by using bit operations.  For the classic layout 横刀立马, it takes < 0.1 second on a PC with Intel i7-6500U 2.5GHz CPU to solve the puzzle.  An ealier version of the program using a more conventional object model took about 0.4 seconds.
 
-   Here is the idea of how to represent the board in bits: My initial thought was to use 1 for an occupied cell and 0 for an empty one.  Then the classic board of 横刀立马 would look like this:
+Here is the idea of how to represent the board in bits: My initial thought was to use 1 for an occupied cell and 0 for an empty one.  Then the classic board of 横刀立马 would look like this:
  
     1111
     1111
@@ -16,19 +16,19 @@
     1111 
     1001
  
-    The problem for this representation is that it has ambiguity. To remove the ambiguity, imagine there is a space between each cell, both horizontally and vertically. Expand the space into an extra cell by itself. This spacing cell is 1 if the neighboring cells belong to one block. Then 横刀立马 looks like the following:
+The problem for this representation is that it has ambiguity. To remove the ambiguity, imagine there is a space between each cell, both horizontally and vertically. Expand the space into an extra cell by itself. This spacing cell is 1 if the neighboring cells belong to one block. Then 横刀立马 looks like the following:
  
-   1011101 <- Row 1
-   1011101 <- Spacing
-   1011101 <- Row 2
-   0000000 <- Spacing
-   1011101 <- Row 3
-   1000001 <- Spacing
-   1010101 <- Row 4
-   0000000 <- Spacing
-   1000001 <- Row 5
+    1011101 <- Row 1
+    1011101 <- Spacing
+    1011101 <- Row 2
+    0000000 <- Spacing
+    1011101 <- Row 3
+    1000001 <- Spacing
+    1010101 <- Row 4
+    0000000 <- Spacing
+    1000001 <- Row 5
  
-    There are 9 x 7 = 63 bits and can be stored in one 64-bit long variable. With the bit image, we can use bit operation to move it left, right, up and down. We can use this to filter out invalid moves efficiently.
+There are 9 x 7 = 63 bits and can be stored in one 64-bit long variable. With the bit image, we can use bit operation to move it left, right, up and down. We can use this to filter out invalid moves efficiently.
 
 
 
