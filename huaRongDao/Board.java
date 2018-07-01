@@ -234,12 +234,12 @@ public class Board {
 		boolean foundMovedBlock;
 		Block oldBlock = null, newBlock = null;
 		for (int i = 0; i < blocks.length; i++) {
+			foundMovedBlock = false;
 			for (int j = 0; j < nextNode.blocks.length; j++) {
 				if (blocks[i].prototype.blockType == nextNode.blocks[j].prototype.blockType
 						&& blocks[i].xPos() == nextNode.blocks[j].xPos()
 						&& blocks[i].yPos() == nextNode.blocks[j].yPos()) {
 					// found match
-					foundMatch = true;
 					foundMovedBlock = true;
 					break;
 				}
