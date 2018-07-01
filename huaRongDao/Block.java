@@ -9,7 +9,7 @@ public class Block {
 	public Block (BlockPrototype prototype, int xPos, int yPos) {
 		this.prototype = prototype;
 		bitImage = prototype.bitImage << (63 - Long.toBinaryString(prototype.bitImage).length() - (14 * yPos + 2 * xPos));
-		/*PrintUtility.printID(image);*/
+		/*PrintUtility.printBitImage(image);*/
 		
 	}
 	

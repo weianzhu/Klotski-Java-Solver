@@ -8,13 +8,10 @@ public class GameSolver {
 	Board solutionNode;
 	HashMap<Long, Board> boardsExplored = new HashMap<Long, Board>();
 	ArrayDeque<Board> boardWorkQueue = new ArrayDeque<Board>();
-	@Deprecated
-	protected int nextIdOfBoardExplored = 0; //Used to set Board.idOfBoardExplored, which could be useful for troubleshooting.
 
 	public void solve(Game game) {
 		this.game = game;
 		boardsExplored.put(game.initialBoard.bitImage, game.initialBoard);
-		//game.initialBoard.idOfBoardExplored = nextIdOfBoardExplored ++;
 		
 		buildGraph(game.initialBoard);
 		
@@ -36,11 +33,12 @@ public class GameSolver {
 						
 			for (int i = 0; i < moveTypes.length; i ++) {
 				// A shortcut for checking invalid moves.  
-				// For example, if there is no valid moves for UP, then there could be no valid moves for UP2, UPLEFT, UPRIGHT 
+				// For example, if there is no valid moves for UP, then there could be no valid moves for UP2, UPLEFT, UPRIGHT
+				// Make sure every 4 elements of moveTypes are in the same order of UP, DOWN, LEFT, RIGHT 
 				if (i > 3 && !hasValidMoves[i%4]) continue;
 				MoveType moveType = moveTypes[i];
 				hasValidMoves[i] = getNextBoard(currentBoard, moveType);
-				if (solutionNode != null) return;
+				if (solutionNode != null) return; //stop if solution found
 			}
 			currentBoard = boardWorkQueue.pollFirst();
 		}
@@ -50,7 +48,7 @@ public class GameSolver {
 	}
         
 	/**
-	 * Get the one shortest path.
+	 * Get one shortest path. There could be multiple equally shortest paths but we are only tracking one.
 	 * 
 	 */
 	protected void findOneShortestPath() {
@@ -82,27 +80,25 @@ public class GameSolver {
 		
 		// The mask has all the Blocks that can do the moveTypes.  It utilizes bit operations to check all the Blocks simultaneously.
 		long validMovesMask = currentBoard.getValidMovesMask(moveType);
-		//PrintUtility.printID(boardMask);
+		//PrintUtility.printBitImage(boardMask);
 		for (int i = 0; i < currentBoard.blocks.length; i++) {
 			//NewPrintUtility.printID(board.and(blockPlacements[i].blockPlacementID));
 			if ((validMovesMask & currentBoard.blocks[i].bitImage) == currentBoard.blocks[i].bitImage) {
 				hasValidMoves = true;
 				//System.out.println(currentBoard.stepNumberToInitialNode + "->" +currentBoard.blocks[i].prototype.name + " " + moveType);
 				long newBlockImage = currentBoard.blocks[i].getMovedImage(moveType);
-				long nextBoardImage = currentBoard.getNextBoardID(currentBoard.blocks[i].bitImage, newBlockImage);
+				long nextBoardImage = currentBoard.getNextBoardImage(currentBoard.blocks[i].bitImage, newBlockImage);
 				//PrintUtility.printID(nextBoardImage);
 				if (!boardsExplored.containsKey(nextBoardImage)) {
 					Block newBlock = new Block(currentBoard.blocks[i], newBlockImage);
 					Block[] newBlocks = currentBoard.blocks.clone(); 
 					newBlocks[i] = newBlock;
 					Board nextBoard = new Board(newBlocks, nextBoardImage);
-					//PrintUtility.printID(newBoard.image);
+					//PrintUtility.printBitImage(newBoard.image);
 					//newBoard.idOfBoardExplored = game.nextIdOfBoardExplored ++;
 					boardsExplored.put(nextBoardImage, nextBoard);
 					nextBoard.stepNumberToInitialNode = currentBoard.stepNumberToInitialNode + 1;	
 					
-					//nextBoard.connectedBoards.add(currentBoard);
-					//currentBoard.connectedBoards.add(nextBoard);
 					nextBoard.previousBoard = currentBoard;
 					// Check if it is a solution
 					if (nextBoard.isSolved()) solutionNode = nextBoard;

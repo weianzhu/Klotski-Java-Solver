@@ -207,7 +207,7 @@ public class Board {
 	 * @param newBlockImage
 	 * @return
 	 */
-	public long getNextBoardID(long oldBlockImage, long newBlockImage) {
+	public long getNextBoardImage(long oldBlockImage, long newBlockImage) {
 		return bitImage ^ oldBlockImage ^ newBlockImage;
 	}
 
@@ -231,36 +231,36 @@ public class Board {
 
 	Move calculcateMove(Board nextNode) {
 		Move move;
-		boolean foundMatch;
+		boolean foundMovedBlock;
 		Block oldBlock = null, newBlock = null;
 		for (int i = 0; i < blocks.length; i++) {
-			foundMatch = false;
 			for (int j = 0; j < nextNode.blocks.length; j++) {
 				if (blocks[i].prototype.blockType == nextNode.blocks[j].prototype.blockType
 						&& blocks[i].xPos() == nextNode.blocks[j].xPos()
 						&& blocks[i].yPos() == nextNode.blocks[j].yPos()) {
 					// found match
 					foundMatch = true;
+					foundMovedBlock = true;
 					break;
 				}
 			}
-			if (!foundMatch) {
+			if (!foundMovedBlock) {
 				oldBlock = blocks[i];
 			}
 		}
 
 		for (int j = 0; j < nextNode.blocks.length; j++) {
-			foundMatch = false;
+			foundMovedBlock = false;
 			for (int i = 0; i < blocks.length; i++) {
 				if (blocks[i].prototype.blockType == nextNode.blocks[j].prototype.blockType
 						&& blocks[i].xPos() == nextNode.blocks[j].xPos()
 						&& blocks[i].yPos() == nextNode.blocks[j].yPos()) {
 					// found match
-					foundMatch = true;
+					foundMovedBlock = true;
 					break;
 				}
 			}
-			if (!foundMatch) {
+			if (!foundMovedBlock) {
 				newBlock = nextNode.blocks[j];
 			}
 		}
@@ -277,33 +277,6 @@ public class Board {
 
 	}
 
-/*	@Override
-	public int hashCode() {
-
-		return Long.hashCode(bitImage);
-	}*/
-	
-	/*static public class StepToSolutionComparator implements Comparator<Board> {
-
-	@Override
-	public int compare(Board arg0, Board arg1) {
-
-		return arg0.stepNumberToSolution == arg1.stepNumberToSolution ? 0
-				: arg0.stepNumberToSolution < arg1.stepNumberToSolution ? -1 : 1;
-	}
-
-}
-*/
-/*	static public class StepToInitialNodeComparator implements Comparator<Board> {
-
-	@Override
-	public int compare(Board arg0, Board arg1) {
-
-		return arg0.stepNumberToInitialNode == arg1.stepNumberToInitialNode ? 0
-				: arg0.stepNumberToInitialNode < arg1.stepNumberToInitialNode ? -1 : 1;
-	}
-
-}*/
 
 
 }

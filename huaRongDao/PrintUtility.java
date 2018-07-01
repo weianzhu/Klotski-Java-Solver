@@ -8,15 +8,15 @@ public class PrintUtility {
 	private static boolean VERBOSE_MODE = false;
 
 
-	static public void printID(long id) {
-		String temp = toString( id);
+	static public void printBitImage(long bitImage) {
+		String temp = toString( bitImage);
 		System.out.println(temp);
 		System.out.println("");
 
 	}
 	
-	static public String toString(long id) {
-		String temp = String.format("%1$63s", Long.toBinaryString(id));
+	static public String toString(long bitImage) {
+		String temp = String.format("%1$63s", Long.toBinaryString(bitImage));
 		temp = temp.replace(' ', '0');
 		char[] tempChar = new char[81];
 		for (int i = 0; i < 9; i++) {
@@ -89,9 +89,7 @@ public class PrintUtility {
 		}
 		printBoardLayout(finalStep);
 		System.out.println("</td></tr></table>");
-		tempString = game.name + " " + gameSolver.getClass().getSimpleName() + " End"  ;
-		System.out.println(tempString+"<br>");
-			System.out.println("boardsExplored.size=" + gameSolver.boardsExplored.size() + "<br>");
+		System.out.println("# Boards Explored =" + gameSolver.boardsExplored.size() + "<br>");
 
 	}
 	 
